@@ -1,0 +1,52 @@
+version: '3.2'
+services:
+  producer:
+    hostname: 'producer'
+    image: tmatloch/event-producer:latest
+    ports:
+      - '9083:9083'
+  worker:
+    image: tmatloch/event-worker:latest
+    ports:
+      - '8088:8088'
+  rabbitmq_exporter:
+    hostname: 'rabbitmq_exporter'
+    image: kbudde/rabbitmq-exporter
+    depends_on:
+      - "rabbitmq"
+    ports:
+      - "9999:9090"
+    environment:
+      RABBIT_URL: "http://rabbitmq:15672"
+      RABBIT_USER: "guest"
+      RABBIT_PASSWORD: "guest"
+      PUBLISH_PORT: "9090"
+      OUTPUT_FORMAT: "JSON"
+      LOG_LEVEL: "debug"
+  rabbitmq:
+    hostname: 'rabbitmq'
+    image: rabbitmq:3-management
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    expose:
+      - "9090"
+  prometheus:
+    image: prom/prometheus
+    hostname: 'prometheus'
+    volumes:
+      - type: bind
+        source: ./prometheus/prometheus.yml
+        target: /etc/prometheus/prometheus.yml
+    ports:
+      - '9090:9090'
+    depends_on:
+      - rabbitmq_exporter
+  grafana:
+    image: grafana/grafana
+    ports:
+      - '3000:3000'
+    depends_on:
+      - prometheus
+    volumes:
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
