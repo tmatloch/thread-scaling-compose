@@ -21,7 +21,7 @@ datasources:
   jsonData:
     httpMethod: GET
     keepCookies: []
-    timeInterval: 5s
+    timeInterval: 1s
   readOnly: false
   version: 1
   editable: true

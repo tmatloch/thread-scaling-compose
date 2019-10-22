@@ -15,7 +15,6 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 1,
   "links": [],
   "panels": [
     {
@@ -36,7 +35,7 @@
           ],
           "defaults": {
             "mappings": [],
-            "max": 1,
+            "max": 0.5,
             "min": 0,
             "thresholds": [
               {
@@ -45,11 +44,11 @@
               },
               {
                 "color": "#EAB839",
-                "value": 0.2
+                "value": 0.1
               },
               {
                 "color": "red",
-                "value": 0.4
+                "value": 0.3
               }
             ],
             "unit": "s"
@@ -61,10 +60,10 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.4.1",
+      "pluginVersion": "6.4.3",
       "targets": [
         {
-          "expr": "fastExecutionTimer_seconds_max",
+          "expr": "fastExecutionTimer_seconds",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -188,12 +187,12 @@
       "options": {
         "fieldOptions": {
           "calcs": [
-            "last"
+            "mean"
           ],
           "defaults": {
             "mappings": [],
-            "max": 7,
-            "min": 2,
+            "max": 1,
+            "min": 0,
             "thresholds": [
               {
                 "color": "green",
@@ -201,11 +200,11 @@
               },
               {
                 "color": "#EAB839",
-                "value": 3.4
+                "value": 0.25
               },
               {
                 "color": "red",
-                "value": 6
+                "value": 0.5
               }
             ],
             "unit": "s"
@@ -217,10 +216,10 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.4.1",
+      "pluginVersion": "6.4.3",
       "targets": [
         {
-          "expr": "slowExecutionTimer_seconds_max",
+          "expr": "slowExecutionTimer_seconds",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Slow ExecutionTime",
@@ -241,7 +240,7 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 12,
         "x": 0,
         "y": 6
@@ -273,7 +272,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "fastExecutionTime_millis_max",
+          "expr": "fastExecutionTimer_seconds",
           "refId": "A"
         }
       ],
@@ -327,7 +326,7 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 12,
         "x": 12,
         "y": 6
@@ -358,7 +357,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "slowExecutionTime_millis_max",
+          "expr": "slowExecutionTimer_seconds",
           "refId": "A"
         }
       ],
@@ -402,9 +401,147 @@
         "align": false,
         "alignLevel": null
       }
+    },
+    {
+      "cacheTimeout": null,
+      "cards": {
+        "cardPadding": null,
+        "cardRound": null
+      },
+      "color": {
+        "cardColor": "#b4ff00",
+        "colorScale": "sqrt",
+        "colorScheme": "interpolateOranges",
+        "exponent": 0.5,
+        "max": null,
+        "min": null,
+        "mode": "spectrum"
+      },
+      "dataFormat": "tsbuckets",
+      "datasource": "Prometheus",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 13
+      },
+      "heatmap": {},
+      "hideTimeOverride": false,
+      "hideZeroBuckets": true,
+      "highlightCards": true,
+      "id": 9,
+      "legend": {
+        "show": true
+      },
+      "links": [],
+      "options": {},
+      "pluginVersion": "6.4.1",
+      "reverseYBuckets": false,
+      "targets": [
+        {
+          "expr": "sum(increase(fastExecutionTime_seconds_bucket[5m])) by (le)  ",
+          "format": "heatmap",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "{{le}}",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": "5m",
+      "timeShift": null,
+      "title": "Fast execution histogram",
+      "tooltip": {
+        "show": true,
+        "showHistogram": false
+      },
+      "type": "heatmap",
+      "xAxis": {
+        "show": true
+      },
+      "xBucketNumber": null,
+      "xBucketSize": null,
+      "yAxis": {
+        "decimals": null,
+        "format": "dtdurations",
+        "logBase": 1,
+        "max": null,
+        "min": "0",
+        "show": true,
+        "splitFactor": null
+      },
+      "yBucketBound": "auto",
+      "yBucketNumber": null,
+      "yBucketSize": null
+    },
+    {
+      "cacheTimeout": null,
+      "cards": {
+        "cardPadding": null,
+        "cardRound": null
+      },
+      "color": {
+        "cardColor": "#b4ff00",
+        "colorScale": "sqrt",
+        "colorScheme": "interpolateOranges",
+        "exponent": 0.5,
+        "mode": "spectrum"
+      },
+      "dataFormat": "tsbuckets",
+      "datasource": "Prometheus",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 13
+      },
+      "heatmap": {},
+      "hideTimeOverride": false,
+      "hideZeroBuckets": true,
+      "highlightCards": true,
+      "id": 10,
+      "legend": {
+        "show": false
+      },
+      "links": [],
+      "options": {},
+      "pluginVersion": "6.4.3",
+      "reverseYBuckets": false,
+      "targets": [
+        {
+          "expr": "sum(increase(fastExecutionTime_seconds_bucket[5m])) by (le)  ",
+          "format": "heatmap",
+          "legendFormat": "{{le}}",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": "5m",
+      "timeShift": null,
+      "title": "Slow execution histogram",
+      "tooltip": {
+        "show": true,
+        "showHistogram": false
+      },
+      "type": "heatmap",
+      "xAxis": {
+        "show": true
+      },
+      "xBucketNumber": null,
+      "xBucketSize": null,
+      "yAxis": {
+        "decimals": null,
+        "format": "dtdurations",
+        "logBase": 1,
+        "max": null,
+        "min": null,
+        "show": true,
+        "splitFactor": null
+      },
+      "yBucketBound": "auto",
+      "yBucketNumber": null,
+      "yBucketSize": null
     }
   ],
-  "refresh": "5s",
+  "refresh": "1s",
   "schemaVersion": 20,
   "style": "dark",
   "tags": [],
@@ -417,6 +554,7 @@
   },
   "timepicker": {
     "refresh_intervals": [
+      "1s",
       "5s",
       "10s",
       "30s",

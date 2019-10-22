@@ -5,8 +5,12 @@ services:
     image: tmatloch/event-producer:latest
     ports:
       - '9083:9083'
+    expose:
+      - '9083'
   worker:
     image: tmatloch/event-worker:latest
+    environment:
+      RABBITMQ_CONCURRENT_THREAD_NO: "10"
     ports:
       - '8088:8088'
   rabbitmq_exporter:
