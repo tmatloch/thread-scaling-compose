@@ -17,7 +17,7 @@ echo $responsedata
 
 docker run -it --rm -v ${PWD}/gatling/user-files:/opt/gatling/user-files `
   -v ${PWD}/gatling/results:/opt/gatling/results `
-  --network scaling-compose_default `
+  --network thread-scaling-compose_scaling_compose `
   -e JAVA_OPTS="-DfastUsersNo=$fastUsersNo -DslowUsersNo=$slowUsersNo -Dduration=$duration" `
   denvazh/gatling
 

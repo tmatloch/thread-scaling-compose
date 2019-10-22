@@ -7,12 +7,16 @@ services:
       - '9083:9083'
     expose:
       - '9083'
+    networks:
+      - scaling_compose
   worker:
     image: tmatloch/event-worker:latest
     environment:
       RABBITMQ_CONCURRENT_THREAD_NO: "10"
     ports:
       - '8088:8088'
+    networks:
+      - scaling_compose
   rabbitmq_exporter:
     hostname: 'rabbitmq_exporter'
     image: kbudde/rabbitmq-exporter
@@ -27,6 +31,8 @@ services:
       PUBLISH_PORT: "9090"
       OUTPUT_FORMAT: "JSON"
       LOG_LEVEL: "debug"
+    networks:
+      - scaling_compose
   rabbitmq:
     hostname: 'rabbitmq'
     image: rabbitmq:3-management
@@ -35,6 +41,8 @@ services:
       - '15672:15672'
     expose:
       - "9090"
+    networks:
+      - scaling_compose
   prometheus:
     image: prom/prometheus
     hostname: 'prometheus'
@@ -46,6 +54,8 @@ services:
       - '9090:9090'
     depends_on:
       - rabbitmq_exporter
+    networks:
+      - scaling_compose
   grafana:
     image: grafana/grafana
     ports:
@@ -54,3 +64,7 @@ services:
       - prometheus
     volumes:
       - ./grafana/provisioning/:/etc/grafana/provisioning/
+    networks:
+      - scaling_compose
+networks:
+  scaling_compose:
