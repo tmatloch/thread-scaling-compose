@@ -18,24 +18,23 @@
   "links": [],
   "panels": [
     {
-      "datasource": "Prometheus",
+      "datasource": null,
       "gridPos": {
-        "h": 6,
-        "w": 7,
+        "h": 8,
+        "w": 12,
         "x": 0,
         "y": 0
       },
-      "hideTimeOverride": false,
-      "id": 2,
-      "interval": "",
+      "id": 15,
       "options": {
+        "displayMode": "lcd",
         "fieldOptions": {
           "calcs": [
             "mean"
           ],
           "defaults": {
             "mappings": [],
-            "max": 0.5,
+            "max": 20,
             "min": 0,
             "thresholds": [
               {
@@ -43,39 +42,31 @@
                 "value": null
               },
               {
-                "color": "#EAB839",
-                "value": 0.1
-              },
-              {
                 "color": "red",
-                "value": 0.3
+                "value": 15
               }
-            ],
-            "unit": "s"
+            ]
           },
           "override": {},
           "values": false
         },
-        "orientation": "auto",
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "orientation": "horizontal"
       },
       "pluginVersion": "6.4.3",
       "targets": [
         {
-          "expr": "fastExecutionTimer_seconds",
-          "format": "time_series",
-          "hide": false,
-          "instant": false,
-          "intervalFactor": 1,
-          "legendFormat": "Fast executionTime",
+          "expr": "fast_event_threads",
           "refId": "A"
+        },
+        {
+          "expr": "slow_event_threads",
+          "refId": "B"
         }
       ],
-      "timeFrom": "10s",
+      "timeFrom": null,
       "timeShift": null,
-      "title": "Fast queue Execution Time",
-      "type": "gauge"
+      "title": "Panel Title",
+      "type": "bargauge"
     },
     {
       "aliasColors": {},
@@ -87,9 +78,9 @@
       "fill": 4,
       "fillGradient": 0,
       "gridPos": {
-        "h": 6,
-        "w": 10,
-        "x": 7,
+        "h": 8,
+        "w": 12,
+        "x": 12,
         "y": 0
       },
       "id": 8,
@@ -175,63 +166,6 @@
       }
     },
     {
-      "datasource": "Prometheus",
-      "gridPos": {
-        "h": 6,
-        "w": 7,
-        "x": 17,
-        "y": 0
-      },
-      "id": 3,
-      "interval": "",
-      "options": {
-        "fieldOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "defaults": {
-            "mappings": [],
-            "max": 1,
-            "min": 0,
-            "thresholds": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 0.25
-              },
-              {
-                "color": "red",
-                "value": 0.5
-              }
-            ],
-            "unit": "s"
-          },
-          "override": {},
-          "values": false
-        },
-        "orientation": "auto",
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
-      },
-      "pluginVersion": "6.4.3",
-      "targets": [
-        {
-          "expr": "slowExecutionTimer_seconds",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "Slow ExecutionTime",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": "10s",
-      "timeShift": null,
-      "title": "Slow queue Execution Time",
-      "type": "gauge"
-    },
-    {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -243,7 +177,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 6
+        "y": 8
       },
       "hideTimeOverride": false,
       "id": 6,
@@ -329,7 +263,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 6
+        "y": 8
       },
       "id": 5,
       "legend": {
@@ -414,7 +348,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 13
+        "y": 15
       },
       "id": 12,
       "legend": {
@@ -509,7 +443,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 13
+        "y": 15
       },
       "id": 13,
       "legend": {
@@ -613,7 +547,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 21
+        "y": 23
       },
       "heatmap": {},
       "hideTimeOverride": false,
@@ -682,7 +616,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 21
+        "y": 23
       },
       "heatmap": {},
       "hideTimeOverride": false,
@@ -760,5 +694,5 @@
   "timezone": "",
   "title": "Main Dashboard",
   "uid": "1_4qcBpZk",
-  "version": 79
+  "version": 14
 }
