@@ -23,6 +23,11 @@ scrape_configs:
     scrape_interval: 1s
     static_configs:
     - targets: ['producer:9083']
+  - job_name: 'worker'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['worker:8088']
   - job_name: 'rabbitmq'
     metrics_path: '/metrics'
     scrape_interval: 1s
