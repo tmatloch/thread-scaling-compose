@@ -40,7 +40,8 @@ services:
       - '5672:5672'
       - '15672:15672'
     expose:
-      - "9090"
+      - '5672'
+      - '9090'
     networks:
       - scaling_compose
   prometheus:

@@ -37,10 +37,10 @@ class SimulationConcurrent extends Simulation {
 
   val fast = scenario("fast")
 	.exec(http("request_f")
-      .get("/api/v1.0/event/fast?text=permute&limit=15"))
+      .get("/api/v1.0/event/fast?text=permute&multiply=2&limit=15"))
   val slow = scenario("slow")
 	  .exec(http("request_s")
-      .get("/api/v1.0/event/slow?text=permutes&limit=15"))
+      .get("/api/v1.0/event/slow?text=permutes&multiply=2&limit=15"))
   setUp(
     fast.inject(constantConcurrentUsers(fastUsersNo) during (duration seconds)).protocols(httpProtocol),
     slow.inject(constantConcurrentUsers(slowUsersNo) during (duration seconds)).protocols(httpProtocol))

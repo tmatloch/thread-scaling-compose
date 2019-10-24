@@ -1,6 +1,6 @@
 ## Thread Scaling Compose
 
-Stos uruchomieniowy dla systemu asynchronicznego wykorzystującego system kolejkowy w przetważaniu żądań.
+Stos uruchomieniowy dla systemu asynchronicznego wykorzystującego system kolejkowy w przetwarzaniu żądań.
 
 ### Uruchomienie
 
