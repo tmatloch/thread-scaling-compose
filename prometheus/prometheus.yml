@@ -20,7 +20,7 @@ scrape_configs:
     - targets: ['127.0.0.1:9090']
   - job_name: 'producer'
     metrics_path: '/actuator/prometheus'
-    scrape_interval: 1s
+    scrape_interval: 5s
     static_configs:
     - targets: ['producer:9083']
   - job_name: 'worker'
@@ -30,6 +30,6 @@ scrape_configs:
       - targets: ['worker:8088']
   - job_name: 'rabbitmq'
     metrics_path: '/metrics'
-    scrape_interval: 1s
+    scrape_interval: 5s
     static_configs:
     - targets: ['rabbitmq_exporter:9090']

@@ -27,25 +27,22 @@
       },
       "id": 15,
       "options": {
-        "displayMode": "lcd",
+        "displayMode": "gradient",
         "fieldOptions": {
           "calcs": [
-            "mean"
+            "last"
           ],
           "defaults": {
             "mappings": [],
-            "max": 20,
+            "max": 10,
             "min": 0,
             "thresholds": [
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 15
               }
-            ]
+            ],
+            "unit": "short"
           },
           "override": {},
           "values": false
@@ -56,16 +53,21 @@
       "targets": [
         {
           "expr": "fast_event_threads",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Liczba wątków obsługujące zdarzenia typu \"fast\"",
           "refId": "A"
         },
         {
           "expr": "slow_event_threads",
+          "format": "time_series",
+          "legendFormat": "Liczba wątków obsługujące zdarzenia typu \"slow\"",
           "refId": "B"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Panel Title",
+      "title": "Podział ilości wątków na typ obsługiwanych zdarzeń",
       "type": "bargauge"
     },
     {
@@ -127,7 +129,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Messages per Queue",
+      "title": "Liczba zdarzeń oczekujących w kolejce",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -171,11 +173,12 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
+      "description": "",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
-        "w": 12,
+        "h": 6,
+        "w": 24,
         "x": 0,
         "y": 8
       },
@@ -184,6 +187,8 @@
       "legend": {
         "avg": false,
         "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
         "max": false,
         "min": false,
         "show": true,
@@ -207,14 +212,20 @@
       "targets": [
         {
           "expr": "fastExecutionTimer_seconds",
+          "legendFormat": "Średni czas wykonania ostatnich 3 zdarzeń typu \"fast\" w systemie",
           "refId": "A"
+        },
+        {
+          "expr": "slowExecutionTimer_seconds",
+          "legendFormat": "Średni czas wykonania ostatnich 3 zdarzeń typu \"slow\" w systemie",
+          "refId": "B"
         }
       ],
       "thresholds": [],
       "timeFrom": "5m",
       "timeRegions": [],
       "timeShift": null,
-      "title": "Fast execution time",
+      "title": "Średni czas wykonania ostatnich 3 zdarzeń w systemie",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -256,16 +267,16 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": null,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 12,
-        "y": 8
+        "h": 11,
+        "w": 24,
+        "x": 0,
+        "y": 14
       },
-      "id": 5,
+      "id": 17,
       "legend": {
         "avg": false,
         "current": false,
@@ -291,15 +302,21 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "slowExecutionTimer_seconds",
+          "expr": "histogram_quantile(0.95, sum(rate(fastExecutionTime_seconds_bucket[2m])) by (le))",
+          "legendFormat": "Percentyl 95% czasów obsługiwanych żądań typu \"fast\"",
           "refId": "A"
+        },
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(slowExecutionTime_seconds_bucket[2m])) by (le))",
+          "legendFormat": "Percentyl 95% czasów obsługiwanych żądań typu \"slow\"",
+          "refId": "B"
         }
       ],
       "thresholds": [],
-      "timeFrom": "5m",
+      "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Slow execution time",
+      "title": "Percentyl 95% czasów obsługi żądań ",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -345,10 +362,10 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 8,
+        "h": 10,
         "w": 12,
         "x": 0,
-        "y": 15
+        "y": 25
       },
       "id": 12,
       "legend": {
@@ -380,7 +397,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(increase(fastExecutionTime_seconds_bucket[5m])) by (le)",
+          "expr": "sum(increase(fastExecutionTime_seconds_bucket[2m])) by (le)",
           "format": "heatmap",
           "intervalFactor": 1,
           "legendFormat": "{{le}}",
@@ -391,7 +408,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Fast execution time histogram",
+      "title": "Histogram czasów wykonania zdarzeń typu \"fast\"",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -440,10 +457,10 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 8,
+        "h": 10,
         "w": 12,
         "x": 12,
-        "y": 15
+        "y": 25
       },
       "id": 13,
       "legend": {
@@ -475,7 +492,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(increase(slowExecutionTime_seconds_bucket[5m])) by (le)",
+          "expr": "sum(increase(slowExecutionTime_seconds_bucket[2m])) by (le)",
           "format": "heatmap",
           "intervalFactor": 1,
           "legendFormat": "{{le}}",
@@ -486,7 +503,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Slow execution time histogram",
+      "title": "Histogram czasów wykonania zdarzeń typu \"slow\"",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -547,7 +564,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 23
+        "y": 35
       },
       "heatmap": {},
       "hideTimeOverride": false,
@@ -573,7 +590,7 @@
       ],
       "timeFrom": "5m",
       "timeShift": null,
-      "title": "Fast execution histogram",
+      "title": "Heatmap czasów wykonania zdarzeń typu \"fast\"",
       "tooltip": {
         "show": true,
         "showHistogram": false
@@ -616,13 +633,14 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 23
+        "y": 35
       },
       "heatmap": {},
       "hideTimeOverride": false,
       "hideZeroBuckets": true,
       "highlightCards": true,
       "id": 10,
+      "interval": "",
       "legend": {
         "show": false
       },
@@ -640,7 +658,7 @@
       ],
       "timeFrom": "5m",
       "timeShift": null,
-      "title": "Slow execution histogram",
+      "title": "Heatmap czasów wykonania zdarzeń typu \"slow\"",
       "tooltip": {
         "show": true,
         "showHistogram": false
@@ -665,7 +683,7 @@
       "yBucketSize": null
     }
   ],
-  "refresh": "1s",
+  "refresh": "5s",
   "schemaVersion": 20,
   "style": "dark",
   "tags": [],
@@ -694,5 +712,5 @@
   "timezone": "",
   "title": "Main Dashboard",
   "uid": "1_4qcBpZk",
-  "version": 14
+  "version": 1
 }
