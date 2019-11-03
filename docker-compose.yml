@@ -48,6 +48,7 @@ services:
     image: prom/prometheus
     hostname: 'prometheus'
     volumes:
+      - ./prometheus/data:/prometheus
       - type: bind
         source: ./prometheus/prometheus.yml
         target: /etc/prometheus/prometheus.yml
